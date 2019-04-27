@@ -24,6 +24,9 @@ class Main{
                     "3.Add bus\n4.Delete Bus\n5.Change Driver in TripOffering Table\n"+
                     "6.Delete trip Offering from TripOffering Table\n"+
                     "7.Add a set of trip offerings\n8.Change bus in Trip Offering Table\n"+
+                    "9.Display the schedule of all trips\n10.Dsiplay the stops of a given trip\n"+
+                    "11.Display the weekly schedule of a given driver and date\n"+
+                    "12.add actual Trip stop info\n"+
                     "Enter x to close the application\n"+
 	              	"Choose Option : ");
 		String option=sc.nextLine();
@@ -52,6 +55,18 @@ class Main{
                 case "8":
                     change_bus_from_trip_offering(stmt);
                     break;
+                case "9":
+                    display_schedule_of_all_trips(stmt);
+                    break;
+                case "10":
+                    display_stops_of_given_trip(stmt);
+                    break;
+                case "11":
+                    display_weekly_schedule_of_a_given_driver_and_date(stmt);
+                    break;
+                case "12":
+                    add_actual_trip_stop_info(stmt);
+                    break;
 				case "x":
                 case "X":
 					done =true;
@@ -62,6 +77,16 @@ class Main{
 			}
 		}
 	}
+    public static void add_actual_trip_stop_info(Statement stmt){
+
+    }
+
+    public static void display_stops_of_given_trip(Statement stmt){
+
+    }
+    public static void display_schedule_of_all_trips(Statement stmt){
+
+    }
     public static void add_set_of_trip_offering(Statement stmt){
         boolean done = false;
         int result = 0;
