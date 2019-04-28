@@ -78,11 +78,56 @@ class Main{
 		}
 	}
     public static void add_actual_trip_stop_info(Statement stmt){
+        int result = 0;
+        System.out.print("Enter the Trip Number : ");
+        String tripNumber = sc.nextLine();
+        System.out.print("Enter the Date (YYYY-MM-DD) : ");
+        String date = sc.nextLine();
+        System.out.print("Enter the Schedule Start Time (HH:MM:SS) : ");
+        String scheduleStartTime = sc.nextLine();
+        System.out.print("Enter the Stop Number : ");
+        String stopNumber = sc.nextLine();
+        System.out.print("Enter the Scheduled Arrival Time (HH:MM:SS) : ");
+        String scheduledArrivalTime = sc.nextLine();
+        System.out.print("Enter the Actual Arrival Time (HH:MM:SS) : ");
+        String actualArrivalTime = sc.nextLine();
+        System.out.print("Enter the Number of passenger in : ");
+        String numberOfPassengerIn = sc.nextLine();
+        System.out.print("Enter the Number of passenger out : ");
+        String numberOfPassengerOut = sc.nextLine();
+        
+        String varSql = "insert into ActualTripStopInfo values ('" + tripNumber +
+            "','" + date + "','" + scheduleStartTime + "','" + stopNumber + "','" +
+            scheduledArrivalTime + "','" + actualArrivalTime + "','" + numberOfPassengerIn +
+            "','" + numberOfPassengerOut + "')";
+        result = updateDB(varSql,stmt);
+        printMessage(result, "add into actual trip stop info");
 
     }
+    public static void display_weekly_schedule_of_a_given_driver_and_date(Statement stmt){
+    }
 
-    public static void display_stops_of_given_trip(Statement stmt){
+    public static void display_stops_of_given_trip(Statement stmt) {
+        int result = 0;
+        System.out.print("Enter the Trip Number : ");
+        String tripNumber = sc.nextLine();
+        String varSql = ("select * from TripStopInfo where TripNumber="+tripNumber);
+        try{
+            ResultSet rs = queryDB(varSql,stmt);
+            if(rs.next()==false){
+                System.out.println("Result is empty!");
+            }else{
 
+                System.out.println("TripNumber\tStopNumber\tSequenceNumber\tDrivingTime");
+                do{
+                    System.out.println(rs.getString("TripNumber")+"\t\t"+rs.getString("StopNumber")+"\t\t"+
+                        rs.getString("SequenceNumber")+"\t\t"+rs.getString("DrivingTime"));
+                }while(rs.next());
+            }
+            System.out.println();
+        }catch(SQLException e){
+			e.printStackTrace();
+		}
     }
     public static void display_schedule_of_all_trips(Statement stmt){
 
@@ -93,11 +138,11 @@ class Main{
         do{
             System.out.print("Enter the Trip Number : ");
             String tripNumber = sc.nextLine();
-            System.out.print("Enter the Date : ");
+            System.out.print("Enter the Date(YYYY-MM-DD) : ");
             String date = sc.nextLine();
-            System.out.print("Enter the Scheduled Start Time : ");
+            System.out.print("Enter the Scheduled Start Time (HH:MM:SS) : ");
             String scheduledStartTime = sc.nextLine();
-            System.out.print("Enter the ScheduleArrival Time : ");
+            System.out.print("Enter the ScheduleArrival Time (HH:MM:SS) : ");
             String scheduleArrivalTime = sc.nextLine();
             System.out.print("Enter the Driver Name : ");
             String driverName = sc.nextLine();
@@ -118,9 +163,9 @@ class Main{
         int result=0;
         System.out.print("Enter the Trip Number : ");
         String tripNumber = sc.nextLine();
-        System.out.print("Enter the Date : ");
+        System.out.print("Enter the Date (YYYY-MM-DD) : ");
         String date = sc.nextLine();
-        System.out.print("Enter the Scheduled Start Time : ");
+        System.out.print("Enter the Scheduled Start Time(HH:MM:SS) : ");
         String scheduledStartTime = sc.nextLine();
         String varSql = "delete from TripOffering where TripNumber='" + tripNumber + "' and Date='" + date + "' and ScheduledStartTime='" + scheduledStartTime  + "'";
         result=updateDB(varSql,stmt);
@@ -131,7 +176,7 @@ class Main{
         int result=0;
         System.out.print("Enter the Trip Number : ");
         String tripNumber = sc.nextLine();
-        System.out.print("Enter the Date : ");
+        System.out.print("Enter the Date (YYYY-MM-DD) : ");
         String date = sc.nextLine();
         System.out.print("Enter the Scheduled Start Time : ");
         String scheduledStartTime = sc.nextLine();
@@ -147,9 +192,9 @@ class Main{
         int result=0;
         System.out.print("Enter the Trip Number : ");
         String tripNumber = sc.nextLine();
-        System.out.print("Enter the Date : ");
+        System.out.print("Enter the Date (YYYY-MM-DD) : ");
         String date = sc.nextLine();
-        System.out.print("Enter the Scheduled Start Time : ");
+        System.out.print("Enter the Scheduled Start Time (HH:MM:SS) : ");
         String scheduledStartTime = sc.nextLine();
         System.out.print("Enter the new BusID : ");
         String busID = sc.nextLine();
@@ -183,10 +228,10 @@ class Main{
         String busID=sc.nextLine();
         System.out.print("Enter the bus Model : ");
         String model=sc.nextLine();
-        System.out.print("Enter the year of bus : ");
+        System.out.print("Enter the year of bus (YYYY) : ");
         String year=sc.nextLine();
         while(!checkYear(year)){
-            System.out.print("Enter the Year again?(XXXX) : ");
+            System.out.print("Enter the Year again? (YYYY) : ");
             year=sc.nextLine();
         }
         String varSql = "insert into Bus(BusID,Model,Year) values('"+busID+"','"+model+"','"+year+"')";
@@ -210,6 +255,9 @@ class Main{
 		}
 		return result;
 	}
+    public static ResultSet queryDB(String varSql,Statement stmt) throws SQLException{
+        return  stmt.executeQuery(varSql);
+    }
 	public static void success_message(){
 		System.out.println("\nSuccess!\n");
 	}
