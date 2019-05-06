@@ -97,7 +97,8 @@ class Main{
 		System.out.print("Date: ");
 		String dateString = sc.nextLine();
 		
-		String varSql = "SELECT TripNumber, Date, ScheduledStartTime, ScheduleArrivalTime, BusID from TripOffering " + "where DriverName LIKE '" + driver + "' AND DATE_SUB('" + dateString + "',INTERVAL 7 DAY)" + " Order By ScheduledStartTime ";
+		String varSql = "SELECT TripNumber, Date, ScheduledStartTime, ScheduleArrivalTime, BusID from TripOffering " + "where DriverName LIKE '" + driver + "' AND " + "Date BETWEEN '"  + dateString + "' AND " + " DATE_ADD('" + dateString  + "', INTERVAL 1 WEEK) Order By Date ";
+
 		
 		//query for selected driver and date
 		ResultSet rs = stmt.executeQuery(varSql);
